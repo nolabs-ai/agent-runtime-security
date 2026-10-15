@@ -466,7 +466,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .front-art { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; }
 .front-art .dg { min-width: 0 !important; }
 .front-art .d-title { font-size: 16px; }
-.front-art .d-sub { font-size: 13.5px; }
+.front-art .d-sub { font-size: 13px; }
 .front-art .d-label { font-size: 11.5px; }
 .front-art .d-edge { font-size: 13px; }
 @media (max-width: 1000px) { .front-in { grid-template-columns: 1fr; gap: 32px; padding-block: 40px; } .front-art .dg { min-width: 700px !important; } }
