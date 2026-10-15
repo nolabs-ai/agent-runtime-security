@@ -1,0 +1,8 @@
+flowchart LR
+  A["Agent action request<br/>code and input references"] --> S["Trusted supervisor<br/>validate policy and provision context"]
+  S -->|"bounded launch"| X["Constrained execution environment<br/>isolated inputs and scratch<br/>no ambient credentials or network<br/>resource and lifetime limits"]
+  X -->|"untrusted results"| O["Trusted output boundary<br/>validate artifacts and retain labels"]
+  O -->|"authorized import or release"| D["Agent context, workspace<br/>or approved destination"]
+  S --> E["Protected evidence<br/>execution identity and artifact digests<br/>policy, lifecycle and outcome"]
+  O --> E
+  S -->|"terminate children and clean up"| X

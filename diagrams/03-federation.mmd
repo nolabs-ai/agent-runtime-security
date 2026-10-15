@@ -1,0 +1,20 @@
+flowchart LR
+  subgraph EA["Enterprise A"]
+    PA["Local policy and trust"]
+    RA["Agent A runtime"]
+    PA --> RA
+  end
+  subgraph EB["Enterprise B"]
+    PB["Federation checks<br/>and local authorization"]
+    RB["Agent B runtime<br/>own identity and policy"]
+    PB --> RB
+  end
+  subgraph EC["Enterprise C"]
+    PC["Federation checks<br/>and local authorization"]
+    RC["Agent C runtime<br/>own identity and policy"]
+    PC --> RC
+  end
+  RA -->|"bounded delegation"| PB
+  RB -->|"onward grant only if original grant<br/>and B policy permit"| PC
+  RB -.->|"signed receipt and evidence commitment"| RA
+  RC -.->|"signed receipt and evidence commitment"| RB

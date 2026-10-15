@@ -1,0 +1,9 @@
+flowchart LR
+  D["Labeled data<br/>trusted source provenance"] --> C["Agent or model context<br/>accumulated restrictions"]
+  C --> O["Derived output<br/>inherits applicable restrictions"]
+  O --> G{"Destination and<br/>information-flow policy"}
+  G -->|"permitted"| R["Release exact content"]
+  G -->|"release approval eligible"| A["Authorized reviewer<br/>content digest, destination,<br/>operation and expiry"]
+  A --> V["Verify approved bytes<br/>and release conditions"]
+  V --> R
+  G -->|"denied"| B["Block disclosure"]
