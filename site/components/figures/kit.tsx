@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type Kind = "box" | "trusted" | "untrusted" | "evidence" | "zone" | "zone-trusted";
+export type Kind = "box" | "trusted" | "untrusted" | "evidence" | "zone" | "zone-trusted" | "outer";
 
 export function Svg({ w, h, label, children }: { w: number; h: number; label: string; children: ReactNode }) {
   return (

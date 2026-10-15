@@ -46,7 +46,7 @@ Within this reference model, “must” denotes an architectural requirement and
 
 ## Trust model
 
-Agents, their generated commands, tool inputs, retrieved content, and executable tools may be compromised. The trusted computing base includes the runtime supervisor, enforcement mechanisms, credential mediator, underlying isolation mechanisms and their supporting platform, and enterprise identity and governance services. Artifact approval and signature verification establish only the properties covered by their verification procedures; agent behavior remains untrusted.
+Agents, their generated commands, tool inputs, retrieved content, and executable tools may be compromised. Agent behavior may also be incorrect without any adversary: model outputs are probabilistic, so an agent acting on legitimate instructions can select harmful or unintended actions. The architecture therefore treats agent behavior as untrusted regardless of cause. The trusted computing base includes the runtime supervisor, enforcement mechanisms, credential mediator, underlying isolation mechanisms and their supporting platform, and enterprise identity and governance services. Artifact approval and signature verification establish only the properties covered by their verification procedures; agent behavior remains untrusted.
 
 The baseline security model assumes correct operation of the trusted computing base. A malicious infrastructure operator is outside this model. Extending the model to include that adversary requires additional mechanisms and assumptions, potentially including independent evidence witnesses and attested execution environments.
 

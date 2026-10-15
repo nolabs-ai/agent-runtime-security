@@ -15,6 +15,8 @@
   --blue-soft: #e8f0fa;
   --red: #b42318;
   --red-soft: #fdebe9;
+  --untrusted-soft: #fdeceb;
+  --untrusted-line: #d6665b;
   --shadow: 0 1px 2px rgba(15, 28, 46, 0.05), 0 8px 28px rgba(15, 28, 46, 0.06);
   --radius: 14px;
   --header-h: 64px;
@@ -39,6 +41,8 @@
     --blue-soft: #14243f;
     --red: #ff8a80;
     --red-soft: #33191a;
+    --untrusted-soft: #2c191d;
+    --untrusted-line: #ee8a80;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.35);
     color-scheme: dark;
   }
@@ -325,7 +329,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .dg { width: 100%; height: auto; display: block; font-family: var(--font-ui), sans-serif; }
 .dg .n { fill: var(--surface); stroke: var(--line-strong); stroke-width: 1.5; }
 .dg .n-trusted { fill: var(--blue-soft); stroke: color-mix(in srgb, #3b6fd4 55%, var(--line-strong)); }
-.dg .n-untrusted { fill: var(--amber-soft); stroke: color-mix(in srgb, var(--amber) 60%, var(--line-strong)); }
+.dg .n-untrusted { fill: var(--untrusted-soft); stroke: var(--untrusted-line); }
 .dg .n-evidence { fill: var(--accent-soft); stroke: var(--accent); }
 .dg .n-zone { fill: color-mix(in srgb, var(--bg-alt) 60%, transparent); stroke: var(--line-strong); stroke-dasharray: 6 5; }
 .dg .n-zone-trusted { fill: color-mix(in srgb, var(--blue-soft) 70%, transparent); stroke: color-mix(in srgb, #3b6fd4 40%, var(--line-strong)); }
@@ -470,3 +474,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .front-art .d-label { font-size: 11.5px; }
 .front-art .d-edge { font-size: 13px; }
 @media (max-width: 1000px) { .front-in { grid-template-columns: 1fr; gap: 32px; padding-block: 40px; } .front-art .dg { min-width: 700px !important; } }
+
+.dg .n-outer { fill: color-mix(in srgb, var(--bg-alt) 70%, transparent); stroke: var(--ink-2); stroke-width: 2; stroke-dasharray: 11 7; }
+.dg .d-outer-t { font-size: 14px; font-weight: 700; letter-spacing: 0.04em; fill: var(--ink); }
