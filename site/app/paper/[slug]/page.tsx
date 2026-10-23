@@ -40,7 +40,6 @@ export default async function ChapterPage({ params }: { params: Promise<{ slug: 
           <header className="chapter-head">
             <p className="eyebrow">
               Part {part.n} · {part.title}
-              <span> · {c.minutes} min read</span>
             </p>
             <h1>{c.section.title}</h1>
           </header>

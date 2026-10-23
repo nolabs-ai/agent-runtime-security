@@ -2,10 +2,10 @@ import { Edge, Node, Svg, Zone } from "./kit";
 
 export function Federation() {
   return (
-    <Svg w={1040} h={420} label="Federation across three enterprises: bounded delegation from A to B, onward grant from B to C only if the original grant and B's policy permit, with signed receipts flowing back.">
-      <Zone x={20} y={50} w={250} h={340} label="ENTERPRISE A" />
-      <Zone x={420} y={50} w={230} h={340} label="ENTERPRISE B" />
-      <Zone x={800} y={50} w={220} h={340} label="ENTERPRISE C" />
+    <Svg w={1040} h={420} label="Federation across three organizations: bounded delegation from A to B, onward grant from B to C only if the original grant and B's policy permit, with signed receipts flowing back.">
+      <Zone x={20} y={50} w={250} h={340} label="ORGANIZATION A" />
+      <Zone x={420} y={50} w={230} h={340} label="ORGANIZATION B" />
+      <Zone x={800} y={50} w={220} h={340} label="ORGANIZATION C" />
 
       <Node x={40} y={90} w={210} h={80} title="Local policy" lines={["and trust"]} kind="trusted" />
       <Node x={40} y={235} w={210} h={110} title="Agent A runtime" lines={["own identity and policy"]} kind="untrusted" />

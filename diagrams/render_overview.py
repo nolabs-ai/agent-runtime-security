@@ -6,7 +6,7 @@ from xml.sax.saxutils import escape
 OUT = Path(__file__).resolve().parent
 parts = ['''<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220" role="img" aria-labelledby="title desc">
 <title id="title">Agent Runtime Governance: A Reference Architecture</title>
-<desc id="desc">Enterprise services establish policy, identity, credential custody and evidence retention. Inside a governed execution domain, a trusted runtime governs separate agent and tool sandboxes. An adjacent micro-proxy mediates external access. Arrows distinguish control, operation and evidence flows.</desc>
+<desc id="desc">Governance services establish policy, identity, credential custody and evidence retention. Inside a governed execution domain, a runtime control system outside the agent runtime governs separate agent and tool sandboxes. An adjacent credential broker mediates external access. Arrows distinguish control, operation and evidence flows.</desc>
 <defs>
 <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#334155"/></marker>
 <marker id="green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#087f72"/></marker>
@@ -38,7 +38,7 @@ def path(d, cls="flow"):
 text(48, 52, "REFERENCE ARCHITECTURE / REVIEW DRAFT 0.3", "label")
 parts.append('<text x="48" y="108" font-size="44" font-weight="700">Agent Runtime Governance</text>')
 text(48, 144, "Least privilege • explicit policy • controlled authority changes • verifiable evidence", "body")
-text(48, 192, "ENTERPRISE SERVICES", "label")
+text(48, 192, "GOVERNANCE SERVICES", "label")
 box(48, 210, 406, 120, "Policy and identity", ["Trust, enrollment, session binding", "Approvals, leases and revocation"])
 box(478, 210, 406, 120, "Credential custody", ["Vault or provider token service", "Scoped provisioning to local brokers"])
 box(908, 210, 406, 120, "Artifact admission", ["Tool and model provenance", "Verified claims and policy decisions"])
@@ -49,9 +49,9 @@ text(72, 430, "GOVERNED EXECUTION DOMAIN / OUTER ISOLATION BOUNDARY", "label")
 text(72, 460, "Separate capability contexts for agents, tools, and generated-code execution", "small")
 
 rect(72, 486, 1218, 240, "#edf4fb", "#53799e")
-text(96, 520, "TRUSTED RUNTIME / OUTSIDE UNTRUSTED EXECUTION CONTEXTS", "label")
-box(96, 542, 370, 152, "Supervisor and enforcement", ["Session and invocation binding", "Filesystem and socket controls", "Grant expansion and lease checks"], "#fff", "#91aec9")
-box(490, 542, 370, 152, "Agent-adjacent micro-proxy", ["Tool-scoped credential use", "Destination, method and path", "Information-flow release checks"], "#fff", "#91aec9")
+text(96, 520, "RUNTIME CONTROL SYSTEM / OUTSIDE THE AGENT RUNTIME", "label")
+box(96, 542, 370, 152, "Policy enforcement", ["Session and invocation binding", "Filesystem and socket controls", "Grant changes and lease checks"], "#fff", "#91aec9")
+box(490, 542, 370, 152, "Credential broker", ["Tool-scoped credential use", "Destination, method and path", "Information-flow release checks"], "#fff", "#91aec9")
 box(884, 542, 382, 152, "Protected evidence writer", ["Intent, decisions and outcomes", "Keys inaccessible to agents", "Capture failure blocks activity"], "#edf8f5", "#8abdb4")
 
 box(72, 824, 280, 138, "Agent A sandbox", ["Untrusted agent process", "Explicit capabilities"], "#fff9ef", "#c9aa78")

@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant C as Client or driver
+  participant P as Protocol adapter
+  participant K as Credential broker
+  participant B as Credential backend
+  participant D as Database or service
+  participant E as Protected evidence
+
+  K->>B: Fetch credential
+  C->>P: Connect with phantom password
+  P->>P: Verify context; check each statement against policy
+  P->>K: Allowed statement
+  K->>D: Authenticated query with real credential
+  D-->>K: Result
+  K-->>C: Labeled result, no credential
+  P->>E: Record statements and denials

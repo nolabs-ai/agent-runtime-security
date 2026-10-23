@@ -2,9 +2,9 @@ import { Edge, Node, Svg } from "./kit";
 
 export function ConstrainedExec() {
   return (
-    <Svg w={1000} h={450} label="Generated-code execution flow: agent request, trusted supervisor, constrained execution environment, trusted output boundary, destination, with protected evidence.">
+    <Svg w={1000} h={450} label="Generated-code execution flow: agent request, runtime control system, constrained execution environment, trusted output boundary, destination, with protected evidence.">
       <Node x={20} y={70} w={140} h={120} title="Agent request" lines={["code and input", "references"]} kind="untrusted" />
-      <Node x={240} y={70} w={160} h={120} title="Supervisor" lines={["validate policy,", "provision context"]} kind="trusted" />
+      <Node x={240} y={70} w={160} h={120} title="Control system" lines={["validate policy,", "provision context"]} kind="trusted" />
       <Node x={480} y={70} w={220} h={120} title="Constrained environment" lines={["isolated inputs, scratch", "no ambient credentials", "or network; limits"]} kind="untrusted" />
       <Node x={780} y={70} w={200} h={120} title="Output boundary" lines={["validate artifacts,", "retain labels"]} kind="trusted" />
       <Node x={780} y={330} w={200} h={90} title="Destination" lines={["agent context, workspace", "or approved destination"]} />

@@ -69,7 +69,7 @@ function splitFigures(body: string, nextFigure: { n: number }): Segment[] {
 let cache: Section[] | null = null;
 
 export function getSections(): Section[] {
-  if (cache) return cache;
+  if (cache && process.env.NODE_ENV === "production") return cache;
   const raw = fs.readFileSync(path.join(process.cwd(), "content", "paper.md"), "utf8");
   const parts = raw.split(/^## /m).slice(1);
   const nextFigure = { n: 1 };

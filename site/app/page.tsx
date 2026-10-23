@@ -1,6 +1,5 @@
 import { getChapters } from "@/lib/chapters";
 import { SITE } from "@/lib/site";
-import { FrontDiagram } from "@/components/figures/FrontDiagram";
 
 export default function Home() {
   const chapters = getChapters();
@@ -14,9 +13,6 @@ export default function Home() {
           <div className="front-copy">
             <h1>{SITE.title}</h1>
             <p className="front-abstract">{abstract}</p>
-          </div>
-          <div className="front-art">
-            <FrontDiagram />
           </div>
         </div>
       </section>

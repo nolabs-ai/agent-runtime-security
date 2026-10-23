@@ -28,7 +28,6 @@ export default function Contents() {
               <li key={c.slug}>
                 <Link href={`/paper/${c.slug}`}>
                   <span className="cl-title">{c.section.title}</span>
-                  <span className="cl-min">{c.minutes} min</span>
                 </Link>
               </li>
             ))}

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220" role="img" aria-labelledby="title desc">
 <title id="title">Agent Runtime Governance: A Reference Architecture</title>
-<desc id="desc">Enterprise services establish policy, identity, credential custody and evidence retention. Inside a governed execution domain, a trusted runtime governs separate agent and tool sandboxes. An adjacent micro-proxy mediates external access. Arrows distinguish control, operation and evidence flows.</desc>
+<desc id="desc">Governance services establish policy, identity, credential custody and evidence retention. Inside a governed execution domain, a runtime control system outside the agent runtime governs separate agent and tool sandboxes. An adjacent credential broker mediates external access. Arrows distinguish control, operation and evidence flows.</desc>
 <defs>
 <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#334155"/></marker>
 <marker id="green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#087f72"/></marker>
@@ -11,7 +11,7 @@
 <text x="48" y="52" class="label">REFERENCE ARCHITECTURE / REVIEW DRAFT 0.3</text>
 <text x="48" y="108" font-size="44" font-weight="700">Agent Runtime Governance</text>
 <text x="48" y="144" class="body">Least privilege • explicit policy • controlled authority changes • verifiable evidence</text>
-<text x="48" y="192" class="label">ENTERPRISE SERVICES</text>
+<text x="48" y="192" class="label">GOVERNANCE SERVICES</text>
 <rect x="48" y="210" width="406" height="120" rx="10" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
 <text x="70" y="247" class="heading">Policy and identity</text>
 <text x="70" y="282" class="body">Trust, enrollment, session binding</text>
@@ -32,14 +32,14 @@
 <text x="72" y="430" class="label">GOVERNED EXECUTION DOMAIN / OUTER ISOLATION BOUNDARY</text>
 <text x="72" y="460" class="small">Separate capability contexts for agents, tools, and generated-code execution</text>
 <rect x="72" y="486" width="1218" height="240" rx="10" fill="#edf4fb" stroke="#53799e" stroke-width="2"/>
-<text x="96" y="520" class="label">TRUSTED RUNTIME / OUTSIDE UNTRUSTED EXECUTION CONTEXTS</text>
+<text x="96" y="520" class="label">RUNTIME CONTROL SYSTEM / OUTSIDE THE AGENT RUNTIME</text>
 <rect x="96" y="542" width="370" height="152" rx="10" fill="#fff" stroke="#91aec9" stroke-width="2"/>
-<text x="118" y="579" class="heading">Supervisor and enforcement</text>
+<text x="118" y="579" class="heading">Policy enforcement</text>
 <text x="118" y="614" class="body">Session and invocation binding</text>
 <text x="118" y="641" class="body">Filesystem and socket controls</text>
-<text x="118" y="668" class="body">Grant expansion and lease checks</text>
+<text x="118" y="668" class="body">Grant changes and lease checks</text>
 <rect x="490" y="542" width="370" height="152" rx="10" fill="#fff" stroke="#91aec9" stroke-width="2"/>
-<text x="512" y="579" class="heading">Agent-adjacent micro-proxy</text>
+<text x="512" y="579" class="heading">Credential broker</text>
 <text x="512" y="614" class="body">Tool-scoped credential use</text>
 <text x="512" y="641" class="body">Destination, method and path</text>
 <text x="512" y="668" class="body">Information-flow release checks</text>

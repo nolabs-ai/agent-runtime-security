@@ -1,0 +1,7 @@
+flowchart LR
+  S["System prompt<br/>operator instructions"] --> T
+  U["User request"] --> T
+  R["Retrieved content<br/>web, documents, email, code"] --> T
+  O["Tool outputs"] --> T
+  A["Other agents"] --> T
+  T["One token stream<br/>no boundary between instructions and data"] --> N["Next action<br/>tool call, code, message, credential use"]

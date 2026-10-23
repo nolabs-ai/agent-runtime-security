@@ -5,7 +5,7 @@ import { Svg } from "./kit";
 
 const P = [
   { id: "A", x: 110, name: "Agent or tool" },
-  { id: "R", x: 300, name: "Trusted runtime" },
+  { id: "R", x: 300, name: "Control system" },
   { id: "G", x: 490, name: "Governance authority" },
   { id: "E", x: 680, name: "Protected evidence" },
   { id: "X", x: 880, name: "Resource" },
@@ -66,7 +66,7 @@ export function GrantSequence() {
 
   return (
     <div>
-      <Svg w={1000} h={690} label="Sequence diagram of runtime grant expansion between agent, trusted runtime, governance authority, protected evidence and resource.">
+      <Svg w={1000} h={690} label="Sequence diagram of runtime grant expansion between agent, runtime control system, governance authority, protected evidence and resource.">
         {/* lifelines */}
         {P.map((p) => (
           <g key={p.id}>

@@ -1,15 +1,15 @@
 flowchart LR
-  subgraph EA["Enterprise A"]
+  subgraph EA["Organization A"]
     PA["Local policy and trust"]
     RA["Agent A runtime"]
     PA --> RA
   end
-  subgraph EB["Enterprise B"]
+  subgraph EB["Organization B"]
     PB["Federation checks<br/>and local authorization"]
     RB["Agent B runtime<br/>own identity and policy"]
     PB --> RB
   end
-  subgraph EC["Enterprise C"]
+  subgraph EC["Organization C"]
     PC["Federation checks<br/>and local authorization"]
     RC["Agent C runtime<br/>own identity and policy"]
     PC --> RC

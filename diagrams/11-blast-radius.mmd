@@ -1,0 +1,8 @@
+flowchart LR
+  X["Untrusted content"] --> C["Agent context<br/>injection steers the agent"]
+  C --> A1["Write or delete files"] --> K1["Capability contexts"] --> B
+  C --> A2["Run code or tools"] --> K2["Constrained execution"] --> B
+  C --> A3["Use credentials"] --> K3["Credential broker"] --> B
+  C --> A4["Send data out"] --> K4["Release checks"] --> B
+  C --> A5["Request more authority"] --> K5["Approval ceiling"] --> B
+  B["Blast radius<br/>bounded by remaining authority"]

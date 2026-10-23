@@ -2,10 +2,10 @@ import { Edge, Lbl, Node, Svg, Zone } from "./kit";
 
 export function Topology() {
   return (
-    <Svg w={1000} h={710} label="Runtime governance topology: enterprise services above a governed execution domain containing a trusted runtime and separate agent, tool and generated-code sandboxes.">
-      {/* enterprise services */}
-      <Node x={20} y={20} w={225} h={78} title="Enterprise governance" lines={["policy, approvals, trust,", "revocation"]} />
-      <Node x={265} y={20} w={225} h={78} title="Enterprise identity" lines={["enrollment and", "workload federation"]} />
+    <Svg w={1000} h={710} label="Runtime governance topology: governance services above a governed execution domain containing a runtime control system and separate agent, tool and generated-code sandboxes.">
+      {/* governance services */}
+      <Node x={20} y={20} w={225} h={78} title="Governance" lines={["policy, approvals, trust,", "revocation"]} />
+      <Node x={265} y={20} w={225} h={78} title="Identity" lines={["enrollment and", "workload federation"]} />
       <Node x={510} y={20} w={225} h={78} title="Credential custody" lines={["vault or provider", "token service"]} />
       <Node x={755} y={20} w={225} h={78} title="Evidence service" lines={["verification and", "protected retention"]} kind="evidence" />
 
@@ -13,8 +13,8 @@ export function Topology() {
       <Zone x={20} y={190} w={740} h={500} />
       <text x={36} y={678} className="d-label">GOVERNED EXECUTION DOMAIN — OUTER ISOLATION BOUNDARY</text>
       <Zone x={40} y={230} w={700} h={170} kind="zone-trusted" />
-      <text x={55} y={388} className="d-label">TRUSTED AGENT RUNTIME SECURITY</text>
-      <Node x={55} y={245} w={280} h={100} title="Supervisor" lines={["session binding and", "policy enforcement"]} kind="trusted" />
+      <text x={55} y={388} className="d-label">RUNTIME CONTROL SYSTEM · OUTSIDE THE AGENT RUNTIME</text>
+      <Node x={55} y={245} w={280} h={100} title="Policy enforcement" lines={["session binding and", "grant checks"]} kind="trusted" />
       <Node x={355} y={245} w={200} h={100} title="Credential broker" lines={["agent-adjacent,", "invocation-scoped"]} kind="trusted" />
       <Node x={575} y={245} w={150} h={100} title="Evidence writer" lines={["signing keys outside", "agent access"]} kind="evidence" />
 

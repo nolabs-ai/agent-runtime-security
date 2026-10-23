@@ -1,14 +1,14 @@
 flowchart TB
-  G["Enterprise governance<br/>policy, approvals, trust, revocation"]
-  I["Enterprise identity<br/>enrollment and workload federation"]
+  G["Governance<br/>policy, approvals, trust, revocation"]
+  I["Identity<br/>enrollment and workload federation"]
   V["Credential custody<br/>vault or provider token service"]
   E["Evidence service<br/>verification and protected retention"]
   D["Approved destinations<br/>APIs, tools, model inference"]
 
   subgraph DOMAIN["Governed execution domain — outer isolation boundary"]
-    subgraph RT["Trusted agent runtime security"]
-      S["Supervisor<br/>session binding and policy enforcement"]
-      B["Agent-adjacent micro-proxy<br/>tool-scoped credential mediation and L7"]
+    subgraph RT["Runtime control system"]
+      S["Policy enforcement<br/>session binding and grant checks"]
+      B["Credential broker<br/>agent-adjacent, invocation-scoped mediation"]
       L["Protected evidence writer<br/>signing keys outside agent access"]
     end
     subgraph A["Agent A sandbox"]
