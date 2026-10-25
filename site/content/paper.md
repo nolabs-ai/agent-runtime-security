@@ -8,39 +8,23 @@
 
 ## Abstract
 
-Agent runtime governance comprises the mechanisms that translate authority, derived from identity and expressed via policy, into enforceable constraints on agent actions and the resources they access. They also manage the expansion, contraction, and revocation of that authority during execution, and preserve attributable evidence throughout the agent lifecycle. Isolation, authorization, information-flow control, and evidence integrity impose distinct requirements that must be satisfied jointly.
+Agent runtime governance comprises the mechanisms that translate authority, derived from identity and expressed through policy, into enforceable constraints on the actions agents take and the resources they access. These mechanisms also govern how that authority expands, contracts, or is revoked during execution, and they preserve attributable evidence throughout the agent lifecycle. Governance spans four concerns: isolation, authorization, information-flow control, and evidence integrity. Each imposes distinct requirements, and all must be satisfied jointly.
 
-This paper presents a reference architecture organized around explicit protection domains and mediated interactions. A runtime control system, operating outside the agent runtime, enforces narrowly scoped capabilities, brokers credential use, authorizes runtime grant changes that expand or contract authority, and records observations outside the agent's control. Provenance establishes where artifacts came from and whether they were altered, supporting admission decisions. Data labels and taint tracking keep restrictions attached to information as it moves between components.
+This paper presents a reference architecture organized around explicit protection domains and mediated interactions. A control plane, isolated from the agent runtime, enforces narrowly scoped capabilities, brokers credential use, authorizes runtime grant changes that expand or contract authority, and records observations beyond the agent’s reach. Provenance establishes where artifacts came from and whether they were altered, supporting admission decisions. Data labels and taint tracking keep restrictions attached to information as it moves between components.
 
-The contribution is a composition of established security mechanisms, together with explicit trust assumptions, enforcement contracts, and failure semantics. These requirements do not depend on where agents run. The paper specifies an architectural model; empirical validation and quantitative performance evaluation remain future work.
+The architecture’s requirements are independent of where agents run: local machines, continuous integration pipelines, cloud compute, edge devices, or serverless platforms. The paper specifies an architectural model; empirical validation and quantitative performance evaluation remain future work.
 
 ## Threat model
 
-Agent behavior is shaped by inputs that may be untrusted or unpredictable, such as content retrieved from web pages, documents, email, and code repositories, or messages from other agents. The transformer architecture underlying these agents has no separation between control and data planes: instructions and data share a single token stream, so any content in context, whatever its source or medium, can act as an instruction. A prompt injection can therefore steer an agent into malicious or destructive actions, carried out with whatever access the agent holds in its execution domain. Training-based defenses reduce this risk but do not establish an enforcement boundary. Authorization granted at admission is not sufficient on its own; it must remain enforceable at every later action.
+Agent behavior is shaped by inputs that may be untrusted or unpredictable, such as content retrieved from web pages, documents, email, and code repositories, or messages from other agents. The agent cannot always reliably distinguish such content from legitimate instructions, because the transformer architecture underlying it does not separate the two: everything shares a single token stream, so any content in context, whatever its source or medium, can act as an instruction. A prompt injection can therefore steer an agent into malicious or destructive actions, carried out with whatever access the agent holds in its execution domain. Training-based defenses reduce this risk but do not establish an enforcement boundary. For this reason, authorization granted at admission is not sufficient on its own; it must remain enforceable at every subsequent action.
 
-This reference architecture does not include controls intended to block, detect, or filter prompt injection. While instructions and data share a single token stream, we do not expect the problem to be fully solved, and a design that depends on solving it fails when it does not. Agent runtime security instead assumes that an injection will sometimes succeed and limits the blast radius: what a compromised agent can reach, change, or disclose, and for how long.
+### Prompt injection
 
-### Why agents are different
+This reference architecture does not include controls intended to block, detect, or filter prompt injection. As long as instructions and data share a single token stream, we do not expect prompt injection ever to be fully solved, and a design that depends on solving it fails whenever that defense fails. The architecture instead assumes that an injection will sometimes succeed and limits the blast radius: what a compromised agent can reach, change, or disclose, and for how long.
 
-In classic injection attacks, such as SQL injection or shell injection, the defense is structural: a parameterized query separates code from data, and the interpreter enforces the separation. A language model has no equivalent. Delimiters, prompt hardening, and training that prioritizes some instructions over others change how likely the model is to follow an injected instruction, but they do not establish a boundary that an attacker cannot cross.
+In classic injection attacks, such as SQL injection or shell injection, defense is structural: a parameterized query separates code from data, and the interpreter enforces the separation. A language model has no equivalent. Delimiters, prompt hardening, and training that prioritizes some instructions over others change how likely the model is to follow an injected instruction, but they offer no guarantee that it will not.
 
-```mermaid
-flowchart LR
-  S["System prompt<br/>operator instructions"] --> T
-  U["User request"] --> T
-  R["Retrieved content<br/>web, documents, email, code"] --> T
-  O["Tool outputs"] --> T
-  A["Other agents"] --> T
-  T["One token stream<br/>no boundary between instructions and data"] --> N["Next action<br/>tool call, code, message, credential use"]
-```
-
-**Figure 1.** Every input to a model, whether trusted instructions, retrieved content, tool results or messages, enters the same context. Nothing in that context marks which tokens are instructions and which are data, so the model decides its next action from all of it.
-
-Agents turn this weakness into action. An agent can call tools, execute code, use credentials, reach the network, and message other agents. A successful injection is therefore not limited to producing wrong text; it can produce effects in the systems the agent can reach.
-
-Agent behavior is also probabilistic. An agent acting on entirely legitimate instructions can select a harmful or unintended action, so the threat model must hold even when no attacker is present.
-
-Finally, authority is ambient unless it is constrained. An agent inherits whatever its execution domain holds: files, network access, credentials, and tools. The damage an injected agent can do is set by that access, not by the attacker's own position.
+The gap becomes clear under adaptive attack. Nasr et al. [[6]](https://arxiv.org/abs/2510.09023) evaluated twelve recent defenses against jailbreaks and prompt injection using attackers who tailor their strategy to each defense’s design. Most defenses that had originally reported near-zero attack success rates were bypassed more than 90% of the time.
 
 ### Threat classes
 
@@ -58,36 +42,9 @@ Finally, authority is ambient unless it is constrained. An agent inherits whatev
 | Isolation escape, control-system compromise | Layered boundaries; protected control system | Outer isolation boundary; Model and terminology | Platform and kernel vulnerabilities |
 | Evidence tampering | Protected evidence writer, signed records, external retention | Evidence integrity | Malicious infrastructure operator |
 
-### Prompt injection
-
-**Mechanism.** An attacker supplies text that the model treats as an instruction. In *direct* injection the attacker is the user of the agent. In *indirect* injection the text is embedded in content the agent later reads, so the user is not the attacker and may never see the payload.
-
-**Examples.** A web page with hidden text telling the agent to send the contents of a local file to an external address. An email or issue comment instructing the agent to run a command. A repository file, such as a README, a code comment, or a configuration file, that steers the agent when it reads the repository. A message from another agent carrying instructions. The medium makes no difference to the mechanism: any content that enters the context can act as an instruction.
-
-**What the attacker needs.** The ability to place content where the agent will read it. The attacker does not need access to the agent, the host, or the credentials.
-
-**Impact.** The agent acts as a confused deputy: it performs the attacker's chosen actions with its own authority. The impact is bounded by what the agent can do, which is why the reference architecture constrains that authority and does not try to filter the input.
-
-**Architectural response.** The reference architecture assumes injection can succeed and limits its consequences. Each tool invocation and generated-code execution runs in its own capability context. Credentials are held by a broker and are not available to the agent. Content from untrusted sources is labeled by its origin, not by inspecting what it says, and taint tracking carries that label to any context and output derived from it. Policy can then deny or require approval for consequential actions initiated from a tainted context and for release of data to a destination. Authorization is enforced at every action, not only at admission.
-
-```mermaid
-flowchart LR
-  X["Untrusted content"] --> C["Agent context<br/>injection steers the agent"]
-  C --> A1["Write or delete files"] --> K1["Capability contexts"] --> B
-  C --> A2["Run code or tools"] --> K2["Constrained execution"] --> B
-  C --> A3["Use credentials"] --> K3["Credential broker"] --> B
-  C --> A4["Send data out"] --> K4["Release checks"] --> B
-  C --> A5["Request more authority"] --> K5["Approval ceiling"] --> B
-  B["Blast radius<br/>bounded by remaining authority"]
-```
-
-**Figure 2.** Prompt injection steers an agent to attempt actions, and each attempt meets a control enforced outside the agent. The outcome is bounded by the agent's remaining authority. The injection itself is neither detected nor blocked.
-
-**Residual risk.** These controls do not detect or prevent the injection itself. An injected agent can still take any action that its remaining authority allows. If an agent is permitted to send email, an injection can cause it to send the wrong email. The controls reduce the authority available to be abused, they do not remove it.
-
 ### What the reference architecture does not claim
 
-The reference architecture does not prevent prompt injection; it limits the blast radius of one that succeeds. It does not cover the model supply chain or the inference stack, protect against covert channels, or defend against a malicious infrastructure operator. Empirical validation remains future work.
+Along with prompt injections, we do not cover the model training pipeline and supply chain or the inference stack and its ability protect against covert channels, or defend against a malicious infrastructure operator.
 
 ## Architectural model and terminology
 
@@ -565,4 +522,4 @@ The references identify foundational research, specifications, and implementatio
 3. Andrew C. Myers and Barbara Liskov. *A Model for Decentralized Information Flow Control*. 1997. [Introduction and paper navigation](https://www.cs.cornell.edu/andru/papers/iflow-sosp97/node1.html).
 4. B. Laurie, E. Messeri, and R. Stradling. *Certificate Transparency Version 2.0*. RFC 9162, 2021. [RFC](https://www.rfc-editor.org/rfc/rfc9162.html).
 5. Dick Hardt and contributors. *AAuth*. Evolving draft protocol work. [Specifications and explainer](https://github.com/dickhardt/AAuth).
-
+6. Milad Nasr, Nicholas Carlini, Chawin Sitawarin, et al. *The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against LLM Jailbreaks and Prompt Injections*. arXiv:2510.09023, 2025. [arXiv](https://arxiv.org/abs/2510.09023).
