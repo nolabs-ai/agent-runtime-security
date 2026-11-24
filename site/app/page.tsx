@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { CopyButton } from "@/components/CopyButton";
 import { FigureFrame } from "@/components/FigureFrame";
 import { Topology } from "@/components/figures/Topology";
 import { getChapters, PARTS } from "@/lib/chapters";
-import { SITE } from "@/lib/site";
+import { BIBTEX, SITE } from "@/lib/site";
 
 const CONCERNS = [
   {
@@ -114,6 +115,36 @@ export default function Home() {
                 </ol>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap cite-grid">
+          <div>
+            <h2 className="cite-h">Review it, cite it</h2>
+            <p className="section-lead">
+              This is a review draft, and the most useful thing you can send is a flaw. Open an issue on GitHub
+              naming the section and what is wrong or missing.
+            </p>
+            <div className="cite-actions">
+              <a href={`${SITE.repo}/issues/new?template=technical-review.yml`} className="btn btn-dark">
+                Submit a review
+              </a>
+              <a href={SITE.pdf} className="btn btn-ghost">Download PDF</a>
+              <a href={SITE.repo} className="btn btn-ghost">GitHub</a>
+            </div>
+            <p className="cite-fine">
+              {SITE.version} · <a href={`${SITE.repo}/blob/main/CHANGELOG.md`}>Changelog</a> ·{" "}
+              <a href={SITE.license.url}>{SITE.license.name}</a>
+            </p>
+          </div>
+          <div className="cite-box">
+            <div className="cite-box-head">
+              <span>BibTeX</span>
+              <CopyButton text={BIBTEX} />
+            </div>
+            <pre>{BIBTEX}</pre>
           </div>
         </div>
       </section>

@@ -1,7 +1,0 @@
-flowchart LR
-  A["Web page<br/>integrity: untrusted"] --> C
-  B["Customer records<br/>confidentiality: restricted"] --> C
-  K["Operator configuration<br/>integrity: trusted"] --> C
-  C["Agent context<br/>merged labels: most restrictive confidentiality,<br/>least trusted integrity"] --> O["Derived outputs<br/>tool results, files, memory, messages inherit labels"]
-  C --> R["Release to destination<br/>confidentiality and destination policy"]
-  C --> X["Consequential action<br/>untrusted integrity: deny or require approval"]

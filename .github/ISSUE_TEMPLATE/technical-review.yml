@@ -1,0 +1,42 @@
+name: Technical review
+description: A flaw, gap or missing prior work in the architecture
+labels: ["review"]
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Section
+      description: Chapter or section heading, plus figure number if relevant
+      placeholder: "Credential broker, Figure 5"
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim or requirement
+      description: Quote or paraphrase the text you are reviewing
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong or missing
+      description: Counterexample, attack, implementation obstacle, or prior work that should be cited
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested change
+      description: Optional
+  - type: dropdown
+    id: credit
+    attributes:
+      label: Credit
+      description: May we list you as a contributor in AUTHORS.md?
+      options:
+        - "Yes, credit me by my GitHub name"
+        - "Yes, but contact me for the name to use"
+        - "No, please don't credit me"
+    validations:
+      required: true

@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you reference this work, please cite it as below."
+title: "Agent Runtime Security: A Reference Architecture"
+abstract: >-
+  Agent runtime security comprises the mechanisms that translate authority,
+  derived from identity and expressed through policy, into enforceable
+  constraints on the actions agents take and the resources they access.
+type: software
+authors:
+  - family-names: Hinds
+    given-names: Luke
+    affiliation: "nolabs, Inc"
+version: "0.3"
+date-released: "2026-10-14"
+license: CC-BY-4.0
+repository-code: "https://github.com/nolabs-ai/agent-runtime-security"
+keywords:
+  - AI agents
+  - runtime security
+  - reference architecture
+  - authorization
+  - information-flow control
+  - audit evidence
+preferred-citation:
+  type: report
+  title: "Agent Runtime Security: A Reference Architecture"
+  authors:
+    - family-names: Hinds
+      given-names: Luke
+      affiliation: "nolabs, Inc"
+  institution:
+    name: "nolabs, Inc"
+  year: 2026
+  month: 10
+  version: "Review draft 0.3"
+  url: "https://github.com/nolabs-ai/agent-runtime-security"

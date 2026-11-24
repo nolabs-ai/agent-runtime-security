@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import Link from "next/link";
-import { SITE } from "@/lib/site";
+import { BYLINE, SITE } from "@/lib/site";
 import "./globals.css";
 
 const display = Fraunces({ subsets: ["latin"], variable: "--font-display", axes: ["opsz"], style: ["normal", "italic"] });
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://agent-runtime-governance.vercel.app"),
   title: { default: `${SITE.title}: ${SITE.subtitle}`, template: `%s · ${SITE.title}` },
   description: SITE.description,
-  authors: [{ name: SITE.author }],
+  authors: SITE.authors.map((a) => ({ name: a.name })),
   openGraph: {
     title: `${SITE.title}: ${SITE.subtitle}`,
     description: SITE.description,
@@ -52,8 +52,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <strong>{SITE.title}: {SITE.subtitle}</strong>
               <p>{SITE.version} · {SITE.date}</p>
-              <p>{SITE.author} · {SITE.org}</p>
+              <p>{BYLINE}</p>
             </div>
+            <nav className="foot-links" aria-label="Paper resources">
+              <a href={SITE.pdf}>PDF</a>
+              <a href={SITE.repo}>GitHub</a>
+              <a href={`${SITE.repo}/issues/new?template=technical-review.yml`}>Submit a review</a>
+              <a href={`${SITE.repo}/blob/main/CHANGELOG.md`}>Changelog</a>
+              <a href={SITE.license.url}>{SITE.license.name}</a>
+            </nav>
           </div>
         </footer>
       </body>

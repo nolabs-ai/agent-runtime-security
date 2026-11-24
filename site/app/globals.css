@@ -213,7 +213,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 /* ---------- footer ---------- */
 .site-footer { border-top: 1px solid var(--line); padding: 56px 0 72px; font-family: var(--font-ui), sans-serif; font-size: 14px; color: var(--muted); background: var(--bg); }
-.foot-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+.foot-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-links a { text-decoration: none; }
+.foot-links a:hover { color: var(--accent-ink); }
 .foot-grid strong { color: var(--ink); display: block; margin-bottom: 8px; font-size: 14px; }
 .foot-grid p { margin: 4px 0; line-height: 1.6; }
 .foot-grid a { color: var(--ink-2); }
@@ -424,9 +427,39 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .required ul { padding-left: 18px; }
 .required em { font-style: normal; font-weight: 650; color: var(--ink); }
 
+/* ---------- print edition (/print, and printing any page) ---------- */
+.print-doc { width: min(820px, 100% - 32px); margin: 0 auto; padding: 56px 0 96px; }
+.print-title { padding-bottom: 32px; margin-bottom: 40px; border-bottom: 2px solid var(--ink); }
+.print-title h1 { font-size: clamp(36px, 5vw, 52px); letter-spacing: -0.03em; }
+.print-subtitle { font-family: var(--font-display), serif; font-size: 24px; color: var(--ink-2); margin: 6px 0 24px; }
+.print-meta { font-family: var(--font-ui), sans-serif; font-size: 15px; color: var(--ink-2); margin: 0 0 20px; }
+.print-note { font-size: 14px; line-height: 1.55; color: var(--muted); margin: 8px 0 0; }
+.print-chapter { margin-top: 56px; }
+.print-chapter > h2 { font-size: 30px; letter-spacing: -0.02em; }
+.print-chapter .prose { margin-top: 20px; }
+
 @media print {
-  .site-header, .chapter-side, .progress, .pager, .lab { display: none !important; }
-  body { background: #fff; color: #000; }
+  @page { size: A4; margin: 18mm 17mm 20mm; }
+  .site-header, .site-footer, .chapter-side, .progress, .pager, .lab, .skip,
+  .legend, .stepper { display: none !important; }
+  html, body { background: #fff !important; color: #000; }
+  body { font-size: 10.5pt; line-height: 1.5; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  a { color: inherit; }
+  .print-doc { width: auto; padding: 0; }
+  .print-title { break-after: page; border-bottom: 0; padding-top: 30vh; }
+  .print-chapter { margin-top: 28pt; }
+  .print-title + .print-chapter { margin-top: 0; }
+  .print-chapter > h2 { font-size: 20pt; break-after: avoid; }
+  .prose h3 { font-size: 13pt; break-after: avoid; }
+  .prose table { min-width: 0; font-size: 9pt; }
+  .prose tr, .prose li { break-inside: avoid; }
+  .figure { break-inside: avoid; margin: 1.4em 0; }
+  .figure-stage { box-shadow: none; padding: 8px; }
+  .figure-scroll { overflow: visible; }
+  .figure .dg { min-width: 0 !important; }
+  .figure figcaption { font-size: 9pt; }
+  .prose-refs li { font-size: 9.5pt; padding: 6px 0 6px 34px; }
+  .prose-refs li::before { top: 6px; width: 22px; height: 22px; font-size: 10px; }
 }
 
 .arch { padding: 72px 0 24px; }
@@ -473,3 +506,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
 
 .dg .n-outer { fill: color-mix(in srgb, var(--bg-alt) 70%, transparent); stroke: var(--ink-2); stroke-width: 2; stroke-dasharray: 11 7; }
 .dg .d-outer-t { font-size: 14px; font-weight: 700; letter-spacing: 0.04em; fill: var(--ink); }
+
+/* ---------- review and cite ---------- */
+.cite-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.cite-h { font-size: clamp(30px, 4vw, 46px); letter-spacing: -0.025em; }
+.cite-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.cite-fine { font-family: var(--font-ui), sans-serif; font-size: 14px; color: var(--muted); margin: 20px 0 0; }
+.cite-fine a { color: var(--ink-2); }
+.cite-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.cite-box-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px 10px 18px; border-bottom: 1px solid var(--line); font-family: var(--font-mono), monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.cite-box pre { margin: 0; padding: 18px; overflow-x: auto; font-family: var(--font-mono), monospace; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+.copy-btn { border-radius: 999px; }
+@media (max-width: 900px) { .cite-grid { grid-template-columns: 1fr; gap: 28px; } }

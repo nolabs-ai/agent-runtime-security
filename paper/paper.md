@@ -2,9 +2,11 @@
 
 **Technical paper · Review draft 0.3 · 14 October 2026**
 
-**Luke Hinds · nolabs, Inc**
+**Authors:** Luke Hinds (nolabs, Inc)
 
 **Affiliation disclosure:** The author is affiliated with nolabs. The architecture specifies vendor-neutral security contracts. Draft preparation and research were assisted by OpenAI Codex. This review draft has not undergone independent technical review.
+
+**License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Source and issue tracker: [github.com/nolabs-ai/agent-runtime-security](https://github.com/nolabs-ai/agent-runtime-security).
 
 ## Abstract
 

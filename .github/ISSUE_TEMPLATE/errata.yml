@@ -1,0 +1,17 @@
+name: Errata
+description: Typo, broken reference, or figure error
+labels: ["errata"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Section heading, figure number, or site URL
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What needs fixing
+    validations:
+      required: true

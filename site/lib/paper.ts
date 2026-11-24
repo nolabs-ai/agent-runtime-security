@@ -70,7 +70,7 @@ let cache: Section[] | null = null;
 
 export function getSections(): Section[] {
   if (cache && process.env.NODE_ENV === "production") return cache;
-  const raw = fs.readFileSync(path.join(process.cwd(), "content", "paper.md"), "utf8");
+  const raw = fs.readFileSync(path.join(process.cwd(), "..", "paper", "paper.md"), "utf8");
   const parts = raw.split(/^## /m).slice(1);
   const nextFigure = { n: 1 };
   cache = parts.map((part) => {
@@ -84,4 +84,24 @@ export function getSections(): Section[] {
     };
   });
   return cache;
+}
+
+export type Author = { name: string; affiliation?: string };
+
+// Authors come from the `**Authors:**` line in the paper's front matter (before the first H2):
+//   **Authors:** Jane Doe (Example Corp), John Smith (Other Org, Inc), Sam Lee
+// Commas inside parentheses belong to the affiliation.
+export function getAuthors(): Author[] {
+  const raw = fs.readFileSync(path.join(process.cwd(), "..", "paper", "paper.md"), "utf8");
+  const front = raw.split(/^## /m)[0];
+  const line = /^\*\*Authors?:\*\*\s*(.+)$/m.exec(front)?.[1];
+  if (!line) throw new Error("paper.md: missing **Authors:** line before the first section");
+  const authors: Author[] = [];
+  const re = /\s*([^,()]+?)\s*(?:\(([^)]*)\))?\s*(?:,|$)/g;
+  for (const m of line.matchAll(re)) {
+    if (!m[1]) continue;
+    authors.push({ name: m[1].trim(), affiliation: m[2]?.trim() || undefined });
+  }
+  if (!authors.length) throw new Error(`paper.md: could not parse authors from "${line}"`);
+  return authors;
 }
