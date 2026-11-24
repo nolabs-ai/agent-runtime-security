@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Agent runtime security comprises the mechanisms that translate authority, derived from identity and expressed through policy, into enforceable constraints on the actions agents take and the resources they access. These mechanisms also govern how that authority expands, contracts, or is revoked during execution, and they preserve attributable evidence throughout the agent lifecycle. Governance spans four concerns: isolation, authorization, information-flow control, and evidence integrity. Each imposes distinct requirements, and all must be satisfied jointly.
+Agent runtime security comprises the mechanisms that translate authority, derived from identity and expressed through policy, into enforceable constraints on the actions agents take and the resources they access. These mechanisms also govern how that authority expands, contracts, or is revoked during execution. Throughout the agent lifecycle, they preserve attributable evidence. Governance spans four concerns: isolation, authorization, information-flow control, and evidence integrity. Each imposes distinct requirements, and all must be satisfied jointly.
 
 This paper presents a reference architecture organized around explicit protection domains and mediated interactions. A control plane, isolated from the agent runtime, enforces narrowly scoped capabilities, brokers credential use, authorizes runtime grant changes that expand or contract authority, and records observations beyond the agent’s reach. Provenance establishes where artifacts came from and whether they were altered, supporting admission decisions. Data labels and taint tracking keep restrictions attached to information as it moves between components.
 
