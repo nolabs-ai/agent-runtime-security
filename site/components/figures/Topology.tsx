@@ -13,7 +13,8 @@ export function Topology() {
       <Zone x={20} y={190} w={740} h={500} />
       <text x={36} y={678} className="d-label">GOVERNED EXECUTION DOMAIN — OUTER ISOLATION BOUNDARY</text>
       <Zone x={40} y={230} w={700} h={170} kind="zone-trusted" />
-      <text x={55} y={388} className="d-label">RUNTIME CONTROL SYSTEM · OUTSIDE THE AGENT RUNTIME</text>
+      <text x={726} y={381} textAnchor="end" className="d-label">RUNTIME CONTROL SYSTEM</text>
+      <text x={726} y={394} textAnchor="end" className="d-label">OUTSIDE THE AGENT RUNTIME</text>
       <Node x={55} y={245} w={280} h={100} title="Policy enforcement" lines={["session binding and", "grant checks"]} kind="trusted" />
       <Node x={355} y={245} w={200} h={100} title="Credential broker" lines={["agent-adjacent,", "invocation-scoped"]} kind="trusted" />
       <Node x={575} y={245} w={150} h={100} title="Evidence writer" lines={["signing keys outside", "agent access"]} kind="evidence" />
