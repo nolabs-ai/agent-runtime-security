@@ -1,14 +1,14 @@
-# Agent Runtime Governance: A Reference Architecture
+# Agent Runtime Security: A Reference Architecture
 
 **Technical paper · Review draft 0.3 · 14 October 2026**
 
-**Luke Hinds · nolabs**
+**Luke Hinds · nolabs, Inc**
 
 **Affiliation disclosure:** The author is affiliated with nolabs. The architecture specifies vendor-neutral security contracts. Draft preparation and research were assisted by OpenAI Codex. This review draft has not undergone independent technical review.
 
 ## Abstract
 
-Agent runtime governance comprises the mechanisms that translate authority, derived from identity and expressed through policy, into enforceable constraints on the actions agents take and the resources they access. These mechanisms also govern how that authority expands, contracts, or is revoked during execution, and they preserve attributable evidence throughout the agent lifecycle. Governance spans four concerns: isolation, authorization, information-flow control, and evidence integrity. Each imposes distinct requirements, and all must be satisfied jointly.
+Agent runtime security comprises the mechanisms that translate authority, derived from identity and expressed through policy, into enforceable constraints on the actions agents take and the resources they access. These mechanisms also govern how that authority expands, contracts, or is revoked during execution, and they preserve attributable evidence throughout the agent lifecycle. Governance spans four concerns: isolation, authorization, information-flow control, and evidence integrity. Each imposes distinct requirements, and all must be satisfied jointly.
 
 This paper presents a reference architecture organized around explicit protection domains and mediated interactions. A control plane, isolated from the agent runtime, enforces narrowly scoped capabilities, brokers credential use, authorizes runtime grant changes that expand or contract authority, and records observations beyond the agent’s reach. Provenance establishes where artifacts came from and whether they were altered, supporting admission decisions. Data labels and taint tracking keep restrictions attached to information as it moves between components.
 
@@ -70,22 +70,6 @@ An execution domain may contain several independently governed agents. Each agen
 
 The protection of the runtime control system must be demonstrated, not assumed. The architecture requires protection of its memory, keys, configuration, control interfaces, and evidence; a process relationship or placement label is not sufficient evidence of that protection. Its placement relative to the outer boundary depends on the isolation design.
 
-## Outer isolation boundary
-
-The outer boundary contains an execution domain and defines its relationship to surrounding infrastructure and other domains. Its scope follows the required separation: ownership of data, administrative control, tolerated compromise, and permitted collaboration. An agent, a group of collaborating agents, or a constrained computation may occupy a domain; none of these implies a particular deployment unit.
-
-The boundary specification comprises five elements:
-
-1. **Protected assets:** execution state, data, credentials, control interfaces, and infrastructure whose access or modification is restricted across the boundary.
-2. **Permitted interactions:** data ingress, artifact import, network and socket access, shared storage, control messages, and output release, each associated with an enforcement point and explicit policy.
-3. **Compromise containment:** the application, runtime, kernel, or other component failures that the boundary is intended to contain, together with the trusted components whose compromise invalidates that guarantee.
-4. **Interference bounds:** resource limits and isolation properties for execution, storage, and communication, including explicit side-channel exclusions.
-5. **Lifecycle controls:** admission checks, configuration authority, teardown, state reuse, and failure behavior. Workloads must not be able to modify their own protection configuration.
-
-Isolation mechanisms are selected against this specification. Process and operating-system sandboxes, container isolation, language or WebAssembly runtimes, virtual machines, microVMs, and dedicated hosts may contribute different properties in a composed design. These mechanisms have different trust dependencies and enforcement coverage. Selection is subject to the boundary specification rather than a prescribed stack. The implementation must demonstrate the required separation and identify its residual shared dependencies.
-
-Outer isolation and inner capability enforcement form complementary parts of this design. The outer boundary establishes containment and permitted crossings between domains. Inner boundaries assign narrower authority to agents and action contexts within a domain. A permitted crossing at the outer boundary does not automatically authorize every context to use it, and an inner grant cannot bypass an outer restriction.
-
 ## Runtime governance topology
 
 ```mermaid
@@ -133,11 +117,43 @@ flowchart TB
   L -->|"signed evidence"| E
 ```
 
-**Figure 3.** Solid arrows show requests and evidence; dashed arrows show control and provisioning. The shared runtime box represents trusted functions with isolated session and invocation contexts. It does not grant agents shared credentials. Direct paths from agents or tools to protected destinations must be prevented. Local filesystem and socket access are mediated by runtime and OS controls, independently of credential broker mediation.
+**Figure 3.**
 
-Diagram components denote logical functions and trust boundaries. Their physical placement and packaging are implementation decisions constrained by the required separation properties.
 
-The diagram expresses logical protection domains and mediated crossings. It does not prescribe a host layout or a deployment unit. Governance policy evaluates the isolation properties actually established in each environment.
+### Boundary roles
+
+The architecture uses two kinds of boundary, which differ in what they separate, not in how they are implemented.
+
+The **outer isolation boundary** separates a governed execution domain from surrounding infrastructure and from other domains. It defines what the domain may be affected by, what failures it must contain, and which interactions may cross it.
+
+**Inner boundaries** separate the contexts inside one domain: each agent, each tool invocation, and each generated-code execution. They define what each context may do with the resources, credentials, and communication paths that the domain makes available.
+
+| | Outer isolation boundary | Inner boundaries |
+| --- | --- | --- |
+| Separates | A domain from infrastructure and other domains | Contexts within a domain |
+| Question answered | What may cross, and what must a failure not escape? | What may this context do? |
+| Authority expressed as | Permitted crossings: ingress, egress, shared storage, control messages | Scoped capability and credential-use authority, per agent, invocation, and execution |
+| Limits | Interference, resources, and side channels between domains | Reach of a compromised or mistaken agent inside the domain |
+| Configured by | The boundary specification; workloads cannot modify it | The runtime control system; submitted code cannot modify its own policy |
+| If it fails | Impact beyond the domain | Impact on other contexts, still bounded by the outer boundary |
+
+The two compose. A crossing the outer boundary permits does not authorize every context to use it, and an inner grant cannot bypass an outer restriction.
+
+## Outer isolation boundary
+
+The outer boundary contains an execution domain and defines its relationship to surrounding infrastructure and other domains. Its scope follows the required separation: ownership of data, administrative control, tolerated compromise, and permitted collaboration. An agent, a group of collaborating agents, or a constrained computation may occupy a domain; none of these implies a particular deployment unit.
+
+The boundary specification comprises five elements:
+
+1. **Protected assets:** execution state, data, credentials, control interfaces, and infrastructure whose access or modification is restricted across the boundary.
+2. **Permitted interactions:** data ingress, artifact import, network and socket access, shared storage, control messages, and output release, each associated with an enforcement point and explicit policy.
+3. **Compromise containment:** the application, runtime, kernel, or other component failures that the boundary is intended to contain, together with the trusted components whose compromise invalidates that guarantee.
+4. **Interference bounds:** resource limits and isolation properties for execution, storage, and communication, including explicit side-channel exclusions.
+5. **Lifecycle controls:** admission checks, configuration authority, teardown, state reuse, and failure behavior. Workloads must not be able to modify their own protection configuration.
+
+Isolation mechanisms are selected against this specification. Process and operating-system sandboxes, container isolation, language or WebAssembly runtimes, virtual machines, microVMs, and dedicated hosts may contribute different properties in a composed design. These mechanisms have different trust dependencies and enforcement coverage. Selection is subject to the boundary specification rather than a prescribed stack. The implementation must demonstrate the required separation and identify its residual shared dependencies.
+
+Inner boundaries assign narrower authority to the agents and action contexts within a domain; see Boundary roles in the runtime governance topology.
 
 ## Explicit policy and least privilege
 

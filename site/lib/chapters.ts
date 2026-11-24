@@ -2,7 +2,7 @@ import { getSections, type Section } from "./paper";
 
 export const PARTS = [
   { n: 1, title: "Foundations", blurb: "What is being governed, and what we are willing to trust." },
-  { n: 2, title: "Containment", blurb: "Boundaries, policy and the execution of untrusted code." },
+  { n: 2, title: "Boundaries and enforcement", blurb: "Topology, outer isolation and inner capability enforcement." },
   { n: 3, title: "Authority", blurb: "Credentials, grants, sessions and federation." },
   { n: 4, title: "Data and evidence", blurb: "Information flow, provenance and the audit trail." },
   { n: 5, title: "Deployment and validation", blurb: "Failure semantics, prior art and how to validate." },
@@ -19,8 +19,8 @@ export const CHAPTERS: ChapterMeta[] = [
   { heading: "Abstract", slug: "abstract", short: "Abstract", part: 1 },
   { heading: "Threat model", slug: "threat-model", short: "Threat model", part: 1 },
   { heading: "Architectural model and terminology", slug: "model", short: "Model and terminology", part: 1 },
-  { heading: "Outer isolation boundary", slug: "outer-boundary", short: "Outer isolation boundary", part: 2 },
   { heading: "Runtime governance topology", slug: "topology", short: "Runtime topology", part: 2 },
+  { heading: "Outer isolation boundary", slug: "outer-boundary", short: "Outer isolation boundary", part: 2 },
   { heading: "Explicit policy and least privilege", slug: "policy", short: "Policy and least privilege", part: 2 },
   { heading: "Constrained execution environments", slug: "constrained-execution", short: "Constrained execution", part: 2 },
   { heading: "Credential broker", slug: "credential-broker", short: "Credential broker", part: 3 },

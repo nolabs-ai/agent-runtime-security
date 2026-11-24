@@ -1,4 +1,4 @@
-# Agent Runtime Governance: site
+# Agent Runtime Security: site
 
 Next.js (App Router) educational site for the paper. Source of truth is `content/paper.md`;
 chapters, figures and captions are parsed from it at build time. Per-chapter summaries,

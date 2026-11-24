@@ -36,11 +36,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip">Skip to content</a>
         <header className="site-header">
           <div className="wrap header-in">
-            <Link href="/" className="brand" aria-label="Agent Runtime Governance, home">
-              <span className="brand-mark" aria-hidden="true">
-                <i /><i /><i />
-              </span>
-              <span>Agent Runtime Governance</span>
+            <Link href="/" className="brand" aria-label="Agent Runtime Security, home">
+              <span>Agent Runtime Security</span>
             </Link>
             <nav aria-label="Primary">
               <Link href="/paper">Contents</Link>

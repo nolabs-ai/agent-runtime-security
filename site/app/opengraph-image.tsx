@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Agent Runtime Governance: A Reference Architecture";
+export const alt = "Agent Runtime Security: A Reference Architecture";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -23,7 +23,7 @@ export default function OG() {
           TECHNICAL PAPER · REVIEW DRAFT 0.3
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 88, fontWeight: 700, lineHeight: 1.05 }}>Agent Runtime Governance</div>
+          <div style={{ fontSize: 88, fontWeight: 700, lineHeight: 1.05 }}>Agent Runtime Security</div>
           <div style={{ fontSize: 40, marginTop: 20, color: "#9fb0c8" }}>A Reference Architecture</div>
         </div>
         <div style={{ display: "flex", fontSize: 28, color: "#9fb0c8" }}>Luke Hinds · nolabs</div>

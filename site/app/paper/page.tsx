@@ -4,7 +4,7 @@ import { getChapters, PARTS } from "@/lib/chapters";
 
 export const metadata: Metadata = {
   title: "Contents",
-  description: "All chapters of Agent Runtime Governance: A Reference Architecture, organized as a five-part curriculum.",
+  description: "All chapters of Agent Runtime Security: A Reference Architecture, organized as a five-part curriculum.",
 };
 
 export default function Contents() {
@@ -13,7 +13,7 @@ export default function Contents() {
     <div className="wrap contents">
       <header className="page-head">
         <p className="eyebrow">Contents</p>
-        <h1>Agent Runtime Governance</h1>
+        <h1>Agent Runtime Security</h1>
       </header>
       {PARTS.map((part) => (
         <section key={part.n} className="part">

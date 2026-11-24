@@ -5,7 +5,7 @@ from xml.sax.saxutils import escape
 
 OUT = Path(__file__).resolve().parent
 parts = ['''<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1220" viewBox="0 0 1800 1220" role="img" aria-labelledby="title desc">
-<title id="title">Agent Runtime Governance: A Reference Architecture</title>
+<title id="title">Agent Runtime Security: A Reference Architecture</title>
 <desc id="desc">Governance services establish policy, identity, credential custody and evidence retention. Inside a governed execution domain, a runtime control system outside the agent runtime governs separate agent and tool sandboxes. An adjacent credential broker mediates external access. Arrows distinguish control, operation and evidence flows.</desc>
 <defs>
 <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#334155"/></marker>
@@ -36,7 +36,7 @@ def path(d, cls="flow"):
 
 
 text(48, 52, "REFERENCE ARCHITECTURE / REVIEW DRAFT 0.3", "label")
-parts.append('<text x="48" y="108" font-size="44" font-weight="700">Agent Runtime Governance</text>')
+parts.append('<text x="48" y="108" font-size="44" font-weight="700">Agent Runtime Security</text>')
 text(48, 144, "Least privilege • explicit policy • controlled authority changes • verifiable evidence", "body")
 text(48, 192, "GOVERNANCE SERVICES", "label")
 box(48, 210, 406, 120, "Policy and identity", ["Trust, enrollment, session binding", "Approvals, leases and revocation"])

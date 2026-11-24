@@ -1,5 +1,5 @@
 export const SITE = {
-  title: "Agent Runtime Governance",
+  title: "Agent Runtime Security",
   subtitle: "A Reference Architecture",
   description:
     "An illustrated guide to a reference architecture for constraining AI agent actions, managing changes to their authority, and preserving attributable evidence.",
